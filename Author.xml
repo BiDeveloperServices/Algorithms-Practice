@@ -1,0 +1,51 @@
+<!-- <a>  Design an XML schema for a <Book> element that contains mixed content (both text and child elements) and attributes. Each <Book> should have a title (as an attribute), 
+author (as a child element), and publication year (as an attribute). The content of the <Book> element should allow for both text and nested <Chapter> elements. Each <Chapter> element 
+should have a title attribute and may contain multiple <Section> elements, each with an optional number attribute.
+
+Requirements: 
+
+• The <Book> element should have title and publicationYear attributes. 
+
+• The <Book> element should contain mixed content. 
+
+• The <Book> element should have one or more <Author> child elements. 
+
+• The <Chapter> elements should have a title attribute and may contain multiple <Section> elements. 
+
+• The <Section> elements should have an optional number attribute. !</a> -->
+
+
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:complexType name="Author">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType> 
+
+    <xs:complexType name="SectionType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="number" type="xs:integer" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType> 
+
+    <xs:complexType name="ChapterType">
+        <xs:sequence>
+            <xs:element name="Section" type="SectionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="title" type="xs:string"/>
+    </xs:complexType> 
+
+    <xs:element name="Book">
+        <xs:complexType mixed="true">
+            <xs:sequence>
+                <xs:element name="Author" type="Author" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element name="Chapter" type="ChapterType" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="title" type="xs:string" use="required"/>
+            <xs:attribute name="publicationYear" type="xs:gYear" use="required"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
