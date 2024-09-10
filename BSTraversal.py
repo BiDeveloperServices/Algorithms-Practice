@@ -2,7 +2,7 @@
     BST Traversal:
     Write three functions to traverse a binary tree by:
     In-order, pre-oder, and post-order. Append each node value
-    to an array and have the function return the array
+    to an array and have the function return the array.
 
     Time:  O(N), where N is the number of nodes in the tree
     Space: O(N), where N is the number of nodes in the tree
